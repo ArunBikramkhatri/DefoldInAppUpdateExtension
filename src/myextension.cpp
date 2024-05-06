@@ -1,7 +1,7 @@
 // myextension.cpp
 // Extension lib defines
-#define EXTENSION_NAME myExtension
-#define LIB_NAME "myExtension"
+#define EXTENSION_NAME inAppUpdateExtension
+#define LIB_NAME "inAppUpdateExtension"
 #define MODULE_NAME LIB_NAME
 
 // include the Defold SDK
@@ -9,6 +9,23 @@
 // #include <native_activity.h>
 
 #if defined(DM_PLATFORM_ANDROID)
+
+
+#include <dmsdk/dlib/android.h>
+
+// namespace dmAdmob {
+
+struct Admob
+{
+    jobject        m_InAppUpateJNI;
+
+    jmethodID      m_Initialize;
+    
+
+};
+
+static Admob       g_admob;
+
 
 static JNIEnv* Attach()
 {
@@ -56,38 +73,52 @@ static jclass GetClass(JNIEnv* env, const char* classname)
     env->DeleteLocalRef(str_class_name);
     return outcls;
 }
-void SetActivity(JNIEnv* env , jobject Activity){
-    jclass cls = GetClass(env , "com.example.admob.Admob");
-    dmLogInfo("get class");
-    if (cls == nullptr) {
-            dmLogError("Failed to find class com.example.admob.Admob");
-            // sreturn 0; // Or return an error code indicating failure
-            return;
-        } 
-    jobject obj = env->NewObject(cls ,env->GetMethodID(cls , "<init>" ,"()V"));
 
-    jmethodID method = env->GetMethodID(cls, "setActivity" , "(Landroid/app/Activity;)V");
-    if (method == NULL)
-    {
-        dmLogError("Method is null");
-        // Error handling
-        return;
+
+void in_app_initialize(jobject Activity){
+
+    dmAndroid::ThreadAttacher threadAttacher;
+    JNIEnv* env = threadAttacher.GetEnv();
+    jclass cls = dmAndroid::LoadClass(env, "com.rummy.inAppUpdate.InAppUpdateJNI");
+
+    // InitJNIMethods(env, cls);
+
+    // jclass cls = GetClass(env , "com.example.admob.InAppUpdateJNI");
+    dmLogInfo("get class")
+    jmethodID jni_constructor = env->GetMethodID(cls, "<init>", "(Landroid/app/Activity;)V");
+
+    g_admob.m_AdmobJNI = env->NewGlobalRef(env->NewObject(cls, jni_constructor, Activity));
+    // jclass cls = GetClass(env , "com.example.admob.InAppUpdateJNI");
+    // dmLogInfo("get class");
+    // if (cls == nullptr) {
+    //         dmLogError("Failed to find class com.example.admob.InAppUpdateJNI");
+    //         // sreturn 0; // Or return an error code indicating failure
+    //         return;
+    //     } 
+    // jobject obj =  env->NewGlobalRef(env->NewObject(cls ,env->GetMethodID(cls , "<init>" ,"()V")));
+
+    // jmethodID method = env->GetMethodID(cls, "setActivity" , "(Landroid/app/Activity;)V");
+    // if (method == NULL)
+    // {
+    //     dmLogError("Method is null");
+    //     // Error handling
+    //     return;
  
-    }
-    env->CallVoidMethod(obj, method ,Activity);
+    // }
+    // env->CallVoidMethod(obj, method);
 }
 
-static int SetActivityFromDefold(lua_State* L){
+static int InAppInitialize(lua_State* L){
     // DM_LUA_STACK_CHECK(L ,1);
-    AttachScope attachScope;
-    JNIEnv* env = attachScope.m_Env;
-    dmLogInfo("setActivityFromDefold");
+    // AttachScope attachScope;
+    // JNIEnv* env = attachScope.m_Env;
+    dmLogInfo("InAppInitialize");
     jobject native_activity = dmGraphics::GetNativeAndroidActivity();
     // jobject activity = native_activity->clazz;
 
     // Call the function to set the Activity in Java
-    SetActivity(env, native_activity);
-    dmLogInfo("setActivity");
+    in_app_initialize(native_activity);
+    dmLogInfo("in_app_initialize");
     return 0 ;
 }
 
@@ -181,7 +212,7 @@ static const luaL_reg Module_methods[] =
 {
     {"reverse", Reverse},
     {"show_ad" , ShowAd},
-    {"set_activity_from_defold" , SetActivityFromDefold},
+    {"in_app_initialize" , InAppInitialize},
     {"show_banner_ad" ,ShowBannerAd},
     {0, 0}
 };
