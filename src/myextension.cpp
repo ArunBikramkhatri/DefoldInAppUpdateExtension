@@ -87,7 +87,7 @@ void in_app_initialize(jobject Activity){
     dmLogInfo("get class")
     jmethodID jni_constructor = env->GetMethodID(cls, "<init>", "(Landroid/app/Activity;)V");
 
-    g_admob.m_AdmobJNI = env->NewGlobalRef(env->NewObject(cls, jni_constructor, Activity));
+    g_admob.m_InAppUpateJNI = env->NewGlobalRef(env->NewObject(cls, jni_constructor, Activity));
     // jclass cls = GetClass(env , "com.example.admob.InAppUpdateJNI");
     // dmLogInfo("get class");
     // if (cls == nullptr) {
@@ -153,34 +153,7 @@ static int ShowAd(lua_State* L){
     return 1;
 }
 
-static int ShowBannerAd(lua_State* L){
-    // DM_LUA_STACK_CHECK(L,1);
-    AttachScope attachScope;
-    JNIEnv* env = attachScope.m_Env;
-    jclass cls = GetClass(env , "com.example.admob.Admob");
-    if (cls == nullptr) {
-        dmLogError("Failed to find class com.example.admob.Admob");
-        return 0; // Or return an error code indicating failure
-    }
-    dmLogInfo("Admob Class found");
-    jmethodID method = env->GetStaticMethodID(cls, "showBannerAd", "()Ljava/lang/String;");
-    if (method == nullptr) {
-        dmLogError("Failed to find method showBannerAd");
-        return 0; // Or return an error code indicating failure
-    }
-    jstring return_value = (jstring)env->CallStaticObjectMethod(cls ,method);
-     if (return_value == nullptr) {
-        dmLogError("Method invocation failed");
-        return 0; // Or return an error code indicating failure
-    }
-    const char* str =env->GetStringUTFChars(return_value ,0);
-    lua_pushstring(L,str);
-    env->ReleaseStringUTFChars(return_value ,str);
-    env->DeleteLocalRef(return_value);
-    
-    return 1; 
 
-}
 
 static int Reverse(lua_State* L)
 {
@@ -210,10 +183,7 @@ static int Reverse(lua_State* L)
 // Functions exposed to Lua
 static const luaL_reg Module_methods[] =
 {
-    {"reverse", Reverse},
-    {"show_ad" , ShowAd},
     {"in_app_initialize" , InAppInitialize},
-    {"show_banner_ad" ,ShowBannerAd},
     {0, 0}
 };
 
