@@ -1,10 +1,12 @@
 
-g	java:S112D"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8íøëô1
+g	java:S112E"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8íøëô1
 {	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(«ÑÒÏıÿÿÿÿ8øŞ¬ëô1
-c	java:S116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢óÕ³
+]	java:S125
+"<This block of commented-out lines of code should be removed.(ÿ–…ûúÿÿÿÿ8ŞŒÃíô1
+c	java:S116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢óÕ³
 7
-java:S1170"!Make this final field static too.(¢óÕ³
+java:S1170"!Make this final field static too.(¢óÕ³
 M
-java:S1068"+Remove this unused "TEST_ID" private field.(¦Üàúÿÿÿÿ8Ñäÿêô1
+java:S1068"+Remove this unused "TEST_ID" private field.(¦Üàúÿÿÿÿ8Ñäÿêô1
 N
-java:S1068"3Remove this unused "defoldUserAgent" private field.(‹ÌçÀúÿÿÿÿ
+java:S1068"3Remove this unused "defoldUserAgent" private field.(‹ÌçÀúÿÿÿÿ
