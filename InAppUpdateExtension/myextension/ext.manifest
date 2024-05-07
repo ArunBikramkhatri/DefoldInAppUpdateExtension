@@ -4,4 +4,4 @@ name: "inAppUpdate"
 platforms:
     android:
         context:
-            aaptExtraPackages: ["androidx.work", "com.google.android.gms.common", "androidx.startup"]
+            aaptExtraPackages: ["androidx.work", "androidx.startup"]
