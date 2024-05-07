@@ -1,18 +1,0 @@
-
->
-java:S16043"(Make this anonymous inner class a lambda(É”Ìç
->
-java:S1604O"(Make this anonymous inner class a lambda(É”Ìç
-c	java:S116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŠÜŠË
-7
-java:S1170"!Make this final field static too.(ŠÜŠË
-V	java:S125"<This block of commented-out lines of code should be removed.(÷¸€íúÿÿÿÿ
-T
-java:S3400"9Remove this method and declare a constant for this value.(è¶öþÿÿÿÿ
-V	java:S125"<This block of commented-out lines of code should be removed.(¶ìÿþÿÿÿÿ
-Q	java:S125+"<This block of commented-out lines of code should be removed.(Øš
-O
-java:S3400="9Remove this method and declare a constant for this value.(øÿÄ
-V	java:S125F"<This block of commented-out lines of code should be removed.(æÓþ®øÿÿÿÿ
-N
-java:S1068"3Remove this unused "defoldUserAgent" private field.(‹ÌçÀúÿÿÿÿ
