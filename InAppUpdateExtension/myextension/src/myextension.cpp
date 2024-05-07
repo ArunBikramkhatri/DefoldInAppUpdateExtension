@@ -1,7 +1,7 @@
 // myextension.cpp
 // Extension lib defines
-#define EXTENSION_NAME inAppUpdateExtension
-#define LIB_NAME "inAppUpdateExtension"
+#define EXTENSION_NAME inAppUpdate
+#define LIB_NAME "inAppUpdate"
 #define MODULE_NAME LIB_NAME
 
 // include the Defold SDK
