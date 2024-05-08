@@ -31,6 +31,18 @@ public class InAppUpdateJNI {
     checkUpdate();
   }
 
+  public void makeToast(String message){
+
+    int duration = Toast.LENGTH_SHORT;
+    Log.d(TAG , "make toast");
+    activity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        Toast.makeText(activity , message ,duration).show();
+      }
+    });
+
+  }
   void checkUpdate() {
     try {
       Log.d(TAG, "checkUpdate: 0");
@@ -47,16 +59,19 @@ public class InAppUpdateJNI {
             // instead, pass in AppUpdateType.FLEXIBLE
             && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
           // Request the update.
-          Log.d(TAG, "checkUpdate: available");
+          Log.d(TAG, "Update: available");
+          makeToast("Update: available");
           appUpdateManager.startUpdateFlow(appUpdateInfo,
               activity, AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build());
         }
         if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE) {
           Log.d(TAG, "checkUpdate: not available");
+          makeToast("Update: not available");
         }
 
         if (appUpdateInfo.updateAvailability() == UpdateAvailability.UNKNOWN) {
           Log.d(TAG, "checkUpdate: unknown");
+          makeToast("Update: unknown");
         }
       });
       Log.d(TAG, "checkUpdate: 3");
