@@ -1,4 +1,4 @@
-// myextension.cpp
+// inAppUpdate.cpp
 // Extension lib defines
 #define EXTENSION_NAME inAppUpdate
 #define LIB_NAME "inAppUpdate"

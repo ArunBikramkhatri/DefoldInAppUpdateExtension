@@ -12,5 +12,5 @@ height = 640
 title = InAppUpdateExtension
 
 [library]
-include_dirs = myextension
+include_dirs = extension-inApp 
 
