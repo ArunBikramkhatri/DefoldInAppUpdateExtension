@@ -10,20 +10,15 @@
 
 #if defined(DM_PLATFORM_ANDROID)
 
-
 #include <dmsdk/dlib/android.h>
 
 struct InAppUpdate 
 {
     jobject        m_InAppUpateJNI;
-
     jmethodID      m_Initialize;
-    
-
 };
 
 static InAppUpdate  g_InAppUpdate;
-
 
 static JNIEnv* Attach()
 {
@@ -87,13 +82,8 @@ void in_app_initialize(jobject Activity){
 }
 
 static int InAppInitialize(lua_State* L){
-    // DM_LUA_STACK_CHECK(L ,1);
-    // AttachScope attachScope;
-    // JNIEnv* env = attachScope.m_Env;
     dmLogInfo("InAppInitialize");
     jobject native_activity = dmGraphics::GetNativeAndroidActivity();
-    // jobject activity = native_activity->clazz;
-
     // Call the function to set the Activity in Java
     in_app_initialize(native_activity);
     dmLogInfo("in_app_initialize");
