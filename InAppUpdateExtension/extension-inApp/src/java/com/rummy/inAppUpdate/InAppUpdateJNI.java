@@ -17,7 +17,6 @@ import com.google.android.play.core.install.model.UpdateAvailability;
 
 public class InAppUpdateJNI {
 
-  private static final String TEST_ID = "ca-app-pub-3940256099942544/6300978111";
   private Activity activity;
   private final String TAG = "InAppUpdateJNI";
   private String defoldUserAgent = "defold-x.y.z";
@@ -31,18 +30,19 @@ public class InAppUpdateJNI {
     checkUpdate();
   }
 
-  public void makeToast(String message){
+  public void makeToast(String message) {
 
     int duration = Toast.LENGTH_SHORT;
-    Log.d(TAG , "make toast");
+    Log.d(TAG, "make toast");
     activity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
-        Toast.makeText(activity , message ,duration).show();
+        Toast.makeText(activity, message, duration).show();
       }
     });
 
   }
+
   void checkUpdate() {
     try {
       Log.d(TAG, "checkUpdate: 0");
@@ -78,7 +78,6 @@ public class InAppUpdateJNI {
     } catch (Exception e) {
       e.printStackTrace();
       Log.d(TAG, "checkUpdate: " + e.getLocalizedMessage());
-      throw new RuntimeException(e);
     }
   }
 

@@ -13,9 +13,7 @@
 
 #include <dmsdk/dlib/android.h>
 
-// namespace dmAdmob {
-
-struct Admob
+struct InAppUpdate 
 {
     jobject        m_InAppUpateJNI;
 
@@ -24,7 +22,7 @@ struct Admob
 
 };
 
-static Admob       g_admob;
+static InAppUpdate  g_InAppUpdate;
 
 
 static JNIEnv* Attach()
@@ -82,30 +80,10 @@ void in_app_initialize(jobject Activity){
     jclass cls = dmAndroid::LoadClass(env, "com.rummy.inAppUpdate.InAppUpdateJNI");
 
     // InitJNIMethods(env, cls);
-
-    // jclass cls = GetClass(env , "com.example.admob.InAppUpdateJNI");
     dmLogInfo("get class")
     jmethodID jni_constructor = env->GetMethodID(cls, "<init>", "(Landroid/app/Activity;)V");
 
-    g_admob.m_InAppUpateJNI = env->NewGlobalRef(env->NewObject(cls, jni_constructor, Activity));
-    // jclass cls = GetClass(env , "com.example.admob.InAppUpdateJNI");
-    // dmLogInfo("get class");
-    // if (cls == nullptr) {
-    //         dmLogError("Failed to find class com.example.admob.InAppUpdateJNI");
-    //         // sreturn 0; // Or return an error code indicating failure
-    //         return;
-    //     } 
-    // jobject obj =  env->NewGlobalRef(env->NewObject(cls ,env->GetMethodID(cls , "<init>" ,"()V")));
-
-    // jmethodID method = env->GetMethodID(cls, "setActivity" , "(Landroid/app/Activity;)V");
-    // if (method == NULL)
-    // {
-    //     dmLogError("Method is null");
-    //     // Error handling
-    //     return;
- 
-    // }
-    // env->CallVoidMethod(obj, method);
+    g_InAppUpdate.m_InAppUpateJNI = env->NewGlobalRef(env->NewObject(cls, jni_constructor, Activity));
 }
 
 static int InAppInitialize(lua_State* L){
@@ -122,63 +100,7 @@ static int InAppInitialize(lua_State* L){
     return 0 ;
 }
 
-static int ShowAd(lua_State* L){
-    // DM_LUA_STACK_CHECK(L ,1);
-    AttachScope attachScope;
-    JNIEnv* env = attachScope.m_Env;
 
-    jclass cls = GetClass(env , "com.example.admob.Admob");
-    if (cls == nullptr) {
-        dmLogError("Failed to find class com.example.admob.Admob");
-        return 0; // Or return an error code indicating failure
-    }
-
-    jmethodID method = env->GetStaticMethodID(cls, "showAd", "()Ljava/lang/String;");
-    if (method == nullptr) {
-        dmLogError("Failed to find method showAd");
-        return 0; // Or return an error code indicating failure
-    }
-
-    jstring return_value = (jstring)env->CallStaticObjectMethod(cls, method);
-    if (return_value == nullptr) {
-        dmLogError("Method invocation failed");
-        return 0; // Or return an error code indicating failure
-    }
-
-    const char* str = env->GetStringUTFChars(return_value, 0);
-    lua_pushstring(L, str);
-    env->ReleaseStringUTFChars(return_value, str);
-    env->DeleteLocalRef(return_value);
-    
-    return 1;
-}
-
-
-
-static int Reverse(lua_State* L)
-{
-    // The number of expected items to be on the Lua stack
-    // once this struct goes out of scope
-    DM_LUA_STACK_CHECK(L, 1);
-
-    // Check and get parameter string from stack
-    char* str = (char*)luaL_checkstring(L, 1);
-
-    // Reverse the string
-    int len = strlen(str);
-    for(int i = 0; i < len / 2; i++) {
-        const char a = str[i];
-        const char b = str[len - i - 1];
-        str[i] = b;
-        str[len - i - 1] = a;
-    }
-
-    // Put the reverse string on the stack
-    lua_pushstring(L, str);
-
-    // Return 1 item
-    return 1;
-}
 
 // Functions exposed to Lua
 static const luaL_reg Module_methods[] =
