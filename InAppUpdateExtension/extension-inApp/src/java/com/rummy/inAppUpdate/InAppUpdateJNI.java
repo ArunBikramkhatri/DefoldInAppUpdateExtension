@@ -106,8 +106,8 @@ public class InAppUpdateJNI {
         Activity activity = getWeakActivity();
         if (activity != null) {
             activity.runOnUiThread(() -> new MaterialAlertDialogBuilder(activity)
-                    .setMessage(activity.getResources().getString(R.string.app_update_download_complete))
-                    .setPositiveButton(activity.getResources().getString(R.string.app_update_download_complete_install_action), new DialogInterface.OnClickListener() {
+                    .setMessage("An update has just been downloaded. Install update?")
+                    .setPositiveButton("Install", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             appUpdateManager.completeUpdate();
